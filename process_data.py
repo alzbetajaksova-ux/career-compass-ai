@@ -38,7 +38,7 @@ def clean_job_data(csv_file):
         try:
             print(f"Posielam súbor inzerátov {i+1} až {i+len(batch)}...")
             response = client.models.generate_content(
-                model='gemma-3-1b-it',
+                model='gemma-3-4b-it',
                 contents=combined_prompt
             )
 

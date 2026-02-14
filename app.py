@@ -6,8 +6,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import os
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "..", "data", "career_compass.db")
+
 
 # --- KONFIGURÁCIA ---
 st.set_page_config(page_title="CareerCompass AI", layout="wide", page_icon="🧭")
@@ -55,7 +54,7 @@ st.markdown(f"""
 
 @st.cache_data(show_spinner=False)
 def load_data():
-    con = duckdb.connect(DB_PATH)
+    con = duckdb.connect("career_compass.db")
     try:
         df = con.execute("SELECT * FROM jobs").df()
         df['skills'] = df['skills'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)

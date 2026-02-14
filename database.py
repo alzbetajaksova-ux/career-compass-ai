@@ -3,10 +3,7 @@ import pandas as pd
 import re
 import os
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "..", "data", "career_compass.db")
-RAW_DATA_PATH = os.path.join(BASE_DIR, "..", "data", "test_data.csv")
-AI_DATA_PATH = os.path.join(BASE_DIR, "..", "data", "cleaned_tech_jobs.csv")
+
 
 def clean_salary(salary_str):
     """
@@ -39,11 +36,12 @@ def clean_salary(salary_str):
     return int(base_val)
 
 def update_database():
-    con = duckdb.connect(DB_PATH)
+    db_name = "career_compass.db"
+    con = duckdb.connect(db_name)
 
     try:
-        df_raw = pd.read_csv(RAW_DATA_PATH)
-        df_ai = pd.read_csv(AI_DATA_PATH)
+        df_raw = pd.read_csv("test_data.csv")
+        df_ai = pd.read_csv("cleaned_tech_jobs.csv")
 
         df_final = pd.concat([df_raw, df_ai[['is_tech', 'category', 'skills']]], axis=1)
         
