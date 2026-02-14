@@ -1,4 +1,3 @@
-je niečo čo mi v mojom readme chyba alebo niečo čo by som mala upraviť?
 # 🧭 CareerCompass AI
 
 > AI-powered job market intelligence platform pre data-driven career decisions na slovenskom tech trhu
@@ -163,3 +162,4 @@ http://localhost:8501
 *Data refreshed weekly | Last update: February 2026*
 
 </div>
+
