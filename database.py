@@ -44,42 +44,40 @@ def update_database():
         df_ai = pd.read_csv("cleaned_tech_jobs.csv")
 
         df_final = pd.concat([df_raw, df_ai[['is_tech', 'category', 'skills']]], axis=1)
-        
         df_final = df_final[df_final['is_tech'] == True].copy()
         
-        # --- ČISTENIE PLATU PRED ULOŽENÍM ---
         df_final['salary_numeric'] = df_final['Plat'].apply(clean_salary)
-        
         df_final['Plat'] = df_final['salary_numeric']
-        
         df_final = df_final.dropna(subset=['Plat'])
-        
         df_final['scraped_at'] = pd.Timestamp.now()
 
-        con.execute("DROP TABLE IF EXISTS jobs")
-        con.execute("CREATE TABLE jobs AS SELECT * FROM df_final")
+        # --- ZMENA TU: Namiesto DROP použijeme inteligentné vkladanie ---
         
-        # Odstránenie duplikátov
+        # 1. Ak tabuľka neexistuje, vytvoríme ju prázdnu so správnou štruktúrou
+        con.execute("CREATE TABLE IF NOT EXISTS jobs AS SELECT * FROM df_final WHERE 1=0")
+        
+        # 2. Vložíme nové dáta (Append)
+        con.execute("INSERT INTO jobs SELECT * FROM df_final")
+        
+        # 3. Odstránenie duplikátov (ponecháme len najnovší záznam pre danú firmu a pozíciu)
         con.execute("""
             CREATE TABLE temp_jobs AS 
             SELECT * FROM (
                 SELECT *, ROW_NUMBER() OVER(PARTITION BY Pozícia, Firma ORDER BY scraped_at DESC) as rn
                 FROM jobs
             ) WHERE rn = 1;
+            
             DROP TABLE jobs;
             ALTER TABLE temp_jobs DROP rn;
             ALTER TABLE temp_jobs RENAME TO jobs;
         """)
 
         count = con.execute("SELECT COUNT(*) FROM jobs").fetchone()[0]
-        avg_salary = con.execute("SELECT AVG(Plat) FROM jobs").fetchone()[0]
-        
-        print(f"\nDatabáza úspešne aktualizovaná!")
-        print(f"Počet IT pozícií: {count}")
-        print(f"Priemerný mesačný plat v DB: {int(avg_salary)} €")
+        print(f"\nDatabáza úspešne aktualizovaná")
+        print(f"Celkový počet pozícií v DB: {count}")
 
     except Exception as e:
-        print(f"Chyba pri ukladaní do databázy: {e}")
+        print(f" Chyba: {e}")
     finally:
         con.close()
 

@@ -18,13 +18,13 @@ async def run_scraper():
 
         all_jobs_data = []
         # Prechádzame prvé 4 strany
-        for page_num in range(1, 5):
+        for page_num in range(1, 7):
             if page_num == 1:
-                url = "https://www.profesia.sk/praca/?count_days=14&search_anywhere=software+engineer&sort_by=date"
+                url = "https://www.profesia.sk/praca/?count_days=14&positions[]=740&positions[]=153&positions[]=596&positions[]=600&positions[]=89&positions[]=84&positions[]=85&positions[]=746&positions[]=747&positions[]=593&positions[]=70&search_anywhere=python&sort_by=relevance"
             else:
-                url = f"https://www.profesia.sk/praca/?count_days=14&search_anywhere=software+engineer&sort_by=date&page_num={page_num}"
+                url = f"https://www.profesia.sk/praca/?count_days=14&positions[]=740&positions[]=153&positions[]=596&positions[]=600&positions[]=89&positions[]=84&positions[]=85&positions[]=746&positions[]=747&positions[]=593&positions[]=70&search_anywhere=python&sort_by=relevance&page_num={page_num}"
 
-            print(f"🚀 Navigujem na: {url}")
+            print(f" Navigujem na {page_num} stranu...")
 
             try:
                 await page.goto(url, wait_until="domcontentloaded", timeout=60000)
