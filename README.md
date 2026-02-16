@@ -1,165 +1,68 @@
 # 🧭 CareerCompass AI
 
-> AI-powered job market intelligence platform pre data-driven career decisions na slovenskom tech trhu
-##  MVP Prototyp
+> **Inteligentná platforma na analýzu slovenského tech trhu práce, ktorá premieňa neštruktúrované inzeráty na jasné kariérne dáta.**
 
-**Tento projekt je portfolio MVP (Minimum Viable Product)** vytvorený na demonštráciu end-to-end data science a development skills.
+## Live Demo
+Aplikáciu si môžete okamžite vyskúšať tu: [https://career-compass-ai.streamlit.app/](https://career-compass-ai.streamlit.app/)
+
+---
 
 ![header](image.png)
 ![graf](image-1.png)
 ![grafy](image-2.png)
 
-### **Aktuálny scope:**
--  Scrapuje **Profesia.sk** pre pozície v IT
--  Analyzuje **~100 job postings** 
--  Fungujúca AI pipeline (Gemini/Gemma API) pre skill extraction
--  Interaktívny dashboard s core features
+---
 
-### **Pre production-ready verziu by bolo potrebné:**
--  Multi-source scraping (Indeed, LinkedIn, Startups.com)
--  Larger dataset (1000+ jobs) pre lepšiu statistical significance
--  Scheduled automation (daily/weekly refresh)
--  Time-series data pre trend analysis
+## Problém a Riešenie
 
-**Cieľ tohto MVP:** Ukázať technickú schopnosť postaviť funkčný product od nuly, nie production-scale analytics platform.
+Uchádzači o prácu v IT na slovenskom trhu čelia niekoľkým výzvam:
+* **Netransparentnosť:** Mnoho inzerátov neuvádza jasné platové ohodnotenie alebo podmienky.
+* **Dátový chaos:** Každá firma definuje požiadavky (skills) inak, čo sťažuje porovnávanie.
+* **Rýchle zmeny:** Trh sa mení rýchlejšie, než stíhajú zachytávať tradičné prieskumy.
+
+**CareerCompass AI rieši tieto problémy pomocou plne automatizovanej dátovej pipeline a pokročilej AI.**
 
 ---
 
-## Problém
+## Čo aplikácia dokáže?
 
-Job seekers na slovenskom trhu čelia veľkej neistote:
-- **70% job postings** neuvádzajú konkrétny plat
-- Každá firma píše requirements inak - chaos v dátach
-- Ľudia nevedia či ich platové očakávania sú realistické
-- Chýba prehľad o tom, ktoré skills sú skutočne žiadané
-
-**CareerCompass AI rieši tento problém pomocou automatizovanej dátovej analýzy a AI.**
-
----
-
-##  Riešenie
-
-### **Čo projekt robí:**
-
-1. **Automatický zber dát** - Scrapovania job postings z Profesia.sk, Indeed, Remote.co
-2. **AI spracovanie** - Gemini API extrahuje skills, kategórie a seniority z neštruktúrovaných textov
-3. **Analytika** - Identifikuje trendy, vypočítava priemerné platy, detekuje emerging technologies
-4. **Platový advisor** - Odhaduje reálnu trhovú hodnotu na základe tvojich skills a skúseností
-5. **Vizualizácie** - Interaktívny dashboard s real-time insights
+1.  **Automatický zber dát (Scraping):** 2x týždenne (streda a sobota) robot pomocou knižnice Playwright prechádza **Profesia.sk** a sťahuje najnovšie IT ponuky.
+2.  **AI Analýza (Gemma 3):** Používam najnovší model **Gemma 3** na extrakciu kľúčových zručností (skills), kategorizáciu pozícií a čistenie neštruktúrovaného textu do formátu JSON.
+3.  **Interaktívny Dashboard:** Dáta sú vizualizované v Streamlit dashboarde, kde môžete vidieť:
+    * **Dopyt po technológiách:** Ktoré skilly sú momentálne najžiadanejšie.
+    * **Platová mapa:** Distribúcia platov podľa rolí a seniority.
+    * **Salary Predictor:** Odhad vašej trhovej hodnoty na základe AI analýzy vašich skúseností.
 
 ---
 
-##  Key Features
+## Tech Stack
 
-### **1. Market Intelligence Dashboard**
-- **Top skills demand tracker** - Ktoré technológie sú najžiadanejšie
-- **Salary distribution analysis** - Platové rozpätia pre rôzne role
-- **Skill positioning matrix** - Kvadrantová analýza (dopyt vs. plat)
+### **Data & AI Pipeline**
+* **Python 3.11+:** Srdce celej logiky.
+* **Playwright:** Automatizované prehliadanie webu (scraping).
+* **Gemma 3 (Google AI):** Pokročilé NLP na spracovanie textu inzerátov.
+* **DuckDB & SQLite:** Rýchla analytická databáza pre ukladanie spracovaných dát.
 
-### **2. AI-Powered Salary Predictor**
-- Zadáš svoje skills + roky praxe → dostaneš odhad platu
-- Experience multiplier (+5% za každý rok)
-- Porovnanie s celkovým trhom
-- AI odporúčania na skill development
+### **Frontend & Vizualizácia**
+* **Streamlit:** Moderné rozhranie pre webovú aplikáciu.
+* **Plotly:** Interaktívne grafy a vizuálne metriky.
 
-### **3. Real-time Insights**
--  **Highest Paid** - Top-paying technológie
--  **Most Demanded** - Najpopulárnejšie skills
+### **Automatizácia (CI/CD)**
+* **GitHub Actions:** Zabezpečuje pravidelný refresh dát 2x týždenne bez potreby manuálneho spúšťania.
 
-### **4. Interactive Filters**
-- Filter podľa platového rozpätia
-- Filter podľa kategórie (Data/Dev/DevOps/QA)
-- Full-text search pozícií/firiem
-- Export do CSV
+---
 
+## Aktuálny stav projektu (MVP)
+* **Zdroj dát:** Aktuálne sa zameriavam na **Profesia.sk** (IT sekcia).
+* **Kapacita:** Pipeline spracováva stovky inzerátov v každom cykle.
+* **Deployment:** Aplikácia beží na Streamlit Cloud a dáta sa automaticky aktualizujú cez GitHub Actions.
 
-##  Tech Stack
+---
 
-### **Backend**
-- **Python 3.11+** - Core language
-- **Playwright** - Browser automation (anti-bot scraping)
-- **Gemini 1.5 Flash API** - AI-powered NLP (skill extraction, categorization)
-- **DuckDB** - Embedded analytical database (fast, zero-setup)
-- **pandas** - Data manipulation
+## Roadmap (Budúcnosť)
+* **Viac zdrojov:** Rozšírenie scrapingu o LinkedIn a Indeed.
+* **Time-series analýza:** Sledovanie vývoja platov a popularity technológií v priebehu mesiacov.
+* **Notifikácie:** Upozornenia na nové ponuky, ktoré presne spĺňajú vaše skill-sety.
 
-### **Frontend**
-- **Streamlit** - Interactive web dashboard
-- **Plotly** - Advanced visualizations (scatter, box plots, gauges)
-- **Custom CSS** - Dark/Light mode, animated components
-
-### **Data Pipeline**
-```python
-Job Sites → Scrapers → Raw HTML 
-    ↓
-Gemini API → Structured JSON (skills, salary, category)
-    ↓
-DuckDB → Analytics & Aggregations
-    ↓
-Streamlit → Interactive Dashboard
-```
-
-
-##  Quick Start
-
-### **Prerequisites**
-```bash
-Python 3.11+
-pip
-Git
-```
-
-### **Installation**
-
-1. **Clone repo**
-```bash
-git clone https://github.com/alzbetajaksova-ux/career-compass-ai.git
-cd career-compass-ai
-```
-
-2. **Create virtual environment**
-```bash
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-```
-
-3. **Install dependencies**
-```bash
-pip install -r requirements.txt
-```
-
-4. **Setup Gemini API Key**
-```bash
-# Get free API key: https://aistudio.google.com/app/apikey
-# Add to process_data.py:
-API_KEY = "your_gemini_api_key_here"
-```
-
-5. **Run scraper (collect data)**
-```bash
-# Scrape Profesia.sk for Python jobs
-python scraper_test.py
-
-# Process with AI
-python process_data.py
-
-# Build database
-python database.py
-```
-
-6. **Launch dashboard**
-```bash
-streamlit run app.py
-```
-
-7. **Open browser**
-```
-http://localhost:8501
-```
-
-
-
-
-*Data refreshed weekly | Last update: February 2026*
-
-</div>
-
+---
+*Dáta sú aktualizované automaticky 2x týždenne | Posledná aktualizácia: Február 2026*
