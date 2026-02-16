@@ -3,4 +3,4 @@ pandas
 duckdb
 plotly
 playwright  
-google-generativeai 
+google-genai 
