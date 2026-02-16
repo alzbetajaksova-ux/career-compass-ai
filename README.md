@@ -3,7 +3,7 @@
 > **Inteligentná platforma na analýzu slovenského tech trhu práce, ktorá premieňa neštruktúrované inzeráty na jasné kariérne dáta.**
 
 ## Live Demo
-Aplikáciu si môžete okamžite vyskúšať tu: [https://career-compass-ai.streamlit.app/](https://career-compass-ai.streamlit.app/)
+Aplikáciu si môžete okamžite vyskúšať tu: [https://career-compass-ai.streamlit.app/](https://career-compass-ai-gpewdzyxnh59zo9vnfibv9.streamlit.app/)
 
 ---
 
@@ -66,3 +66,4 @@ Uchádzači o prácu v IT na slovenskom trhu čelia niekoľkým výzvam:
 
 ---
 *Dáta sú aktualizované automaticky 2x týždenne | Posledná aktualizácia: Február 2026*
+
