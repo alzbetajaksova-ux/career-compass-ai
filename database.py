@@ -3,8 +3,6 @@ import pandas as pd
 import re
 import os
 
-
-
 def clean_salary(salary_str):
     """
     Vyčistí textový plat a vráti čisté číslo reprezentujúce mesačnú mzdu.
@@ -51,15 +49,10 @@ def update_database():
         df_final = df_final.dropna(subset=['Plat'])
         df_final['scraped_at'] = pd.Timestamp.now()
 
-        # --- ZMENA TU: Namiesto DROP použijeme inteligentné vkladanie ---
-        
-        # 1. Ak tabuľka neexistuje, vytvoríme ju prázdnu so správnou štruktúrou
         con.execute("CREATE TABLE IF NOT EXISTS jobs AS SELECT * FROM df_final WHERE 1=0")
         
-        # 2. Vložíme nové dáta (Append)
         con.execute("INSERT INTO jobs SELECT * FROM df_final")
         
-        # 3. Odstránenie duplikátov (ponecháme len najnovší záznam pre danú firmu a pozíciu)
         con.execute("""
             CREATE TABLE temp_jobs AS 
             SELECT * FROM (
