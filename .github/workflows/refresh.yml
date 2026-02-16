@@ -1,0 +1,41 @@
+name: Semi-weekly Data Refresh
+
+on:
+  schedule:
+    # Beží v stredu a sobotu o 03:00 ráno
+    - cron: '0 3 * * 3,6'
+  workflow_dispatch: 
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install chromium
+          # Inštalácia systémových závislostí pre Playwright na Linuxe
+          python -m playwright install-deps chromium 
+
+      - name: Run Pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python scraper_test.py
+          python process_data.py
+          python database.py
+
+      - name: Commit and Push database changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action Bot"
+          git add career_compass.db
+          # Commitne len ak sa databáza skutočne zmenila
+          git commit -m "Automated data refresh: $(date +'%Y-%m-%d')" || echo "No changes to commit"
+          git push

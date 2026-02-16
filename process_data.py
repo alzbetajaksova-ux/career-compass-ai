@@ -1,9 +1,10 @@
+import os
 import pandas as pd
 from google import genai
 import time
 import json
 
-API_KEY = "AIzaSyBi4s_zW54xS1IOEHOmzlTC-5hUKw_BJcc"
+API_KEY = os.environ.get('GEMINI_API_KEY', "AIzaSyBi4s_zW54xS1IOEHOmzlTC-5hUKw_BJcc")
 client = genai.Client(api_key=API_KEY)
 
 def clean_job_data(csv_file):
